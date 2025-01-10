@@ -10,11 +10,11 @@ const ProtectedRoute = ({ children }) => {
     return children;
   }
 
-  if (!user) {
-    return <Navigate to="/register" />;
+  if (user) {
+    return children;
   }
 
-  return children;
+  return <Navigate to="/register" />;
 };
 
 ProtectedRoute.propTypes = {
