@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route
-            index
+            path="home"
             element={
               <ProtectedRoute>
                 <Home />
@@ -53,7 +53,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<Error />} />
