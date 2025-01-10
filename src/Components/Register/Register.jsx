@@ -27,12 +27,7 @@ export default function Register() {
   };
 
   const handleLoginRedirect = () => {
-    const user = Cookies.get("user");
-    if (!user) {
-      navigate("/login");
-    } else {
-      navigate("/login");
-    }
+    navigate("/login");
   };
 
   return (
