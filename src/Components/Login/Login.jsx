@@ -11,13 +11,21 @@ export default function Login() {
   useEffect(() => {
     const storedUser = Cookies.get("user");
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
+      try {
+        const parsedUser = JSON.parse(storedUser);
 
-      document.getElementById("email").value = parsedUser.email;
-      document.getElementById("password").value = parsedUser.password;
-      setUserData(parsedUser);
+        if (parsedUser.email && parsedUser.password) {
+          document.getElementById("email").value = parsedUser.email;
+          document.getElementById("password").value = parsedUser.password;
+          setUserData(parsedUser);
+        }
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        setErrorMessage("Invalid user data.");
+      }
     }
   }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -25,14 +33,19 @@ export default function Login() {
 
     const storedUser = Cookies.get("user");
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
+      try {
+        const parsedUser = JSON.parse(storedUser);
 
-      if (email === parsedUser.email && password === parsedUser.password) {
-        setUserData(parsedUser);
-        setErrorMessage("");
-        navigate("/");
-      } else {
-        setErrorMessage("Invalid email or password.");
+        if (email === parsedUser.email && password === parsedUser.password) {
+          setUserData(parsedUser);
+          setErrorMessage("");
+          navigate("/");
+        } else {
+          setErrorMessage("Invalid email or password.");
+        }
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        setErrorMessage("Invalid user data.");
       }
     } else {
       setErrorMessage("No registered user found.");
@@ -104,7 +117,8 @@ export default function Login() {
                 </Link>
               </div>
             </form>
-            {userData && (
+
+            {userData && userData.email && (
               <div className="mt-4 text-green-500 d-none">
                 Logged in as: {userData.email}
               </div>

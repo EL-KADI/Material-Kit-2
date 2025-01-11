@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -46,6 +48,26 @@ export default function Navbar() {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
+    }
+  };
+
+  const handleLogout = () => {
+    const user = Cookies.get("user"); // الحصول على بيانات المستخدم من الكوكيز
+
+    // إذا كانت البيانات موجودة في الكوكيز، يتم حفظها في localStorage
+    if (user) {
+      localStorage.setItem("savedUser", user); // حفظ نسخة من الكوكيز في localStorage
+    }
+
+    Cookies.remove("user"); // مسح الكوكيز
+
+    // التحقق من وجود بيانات المستخدم في localStorage
+    const savedUser = localStorage.getItem("savedUser");
+    if (savedUser) {
+      Cookies.set("user", savedUser); // إعادة تعيين الكوكيز من localStorage
+      navigate("/login"); // توجيه المستخدم إلى صفحة Login
+    } else {
+      navigate("/register"); // إذا لم تكن البيانات موجودة، توجيه إلى صفحة Register
     }
   };
 
@@ -139,6 +161,17 @@ export default function Navbar() {
               >
                 Contact
               </NavLink>
+            </li>
+            <li>
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 hover:bg-red-700 w-full font-bold p-[0.8rem] lg:p-0.5
+                     block py-2 px-3 text-white rounded xl:p-1 xl:mt-0 mt-3"
+                >
+                  Log out
+                </button>
+              </li>
             </li>
           </ul>
         </div>

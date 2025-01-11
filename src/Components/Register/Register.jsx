@@ -26,6 +26,14 @@ export default function Register() {
     navigate("/login");
   };
 
+  const handleLoginRedirect = () => {
+    const savedUser = localStorage.getItem("savedUser"); // قراءة البيانات المحفوظة في localStorage
+    if (savedUser) {
+      Cookies.set("user", savedUser); // إعادة تعيين الكوكيز باستخدام البيانات المسترجعة
+    }
+    navigate("/login"); // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
+  };
+
   return (
     <div className="container bg-[url('../../Imges/factory-DwwbhEY2.gif')] bg-center bg-no-repeat w-full bg-cover h-screen bg-gray-500 bg-blend-darken 2xl:h-screen">
       <div className="row">
@@ -99,6 +107,7 @@ export default function Register() {
                 Already have an account?
                 <Link
                   to="/login"
+                  onClick={handleLoginRedirect} // إضافة وظيفة handleLoginRedirect
                   className="text-blue-700 hover:underline dark:text-blue-500 ms-2"
                 >
                   Login
