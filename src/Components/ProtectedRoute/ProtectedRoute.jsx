@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
     user &&
     (location.pathname === "/login" || location.pathname === "/register")
   ) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   if (
