@@ -6,7 +6,7 @@ import Animation from "../Animation/Animation";
 export default function Register() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-
+  const user = Cookies.get("user");
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -102,7 +102,7 @@ export default function Register() {
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Already have an account?
                 <Link
-                  to="/login"
+                  to={user ? "/" : "/login"} 
                   onClick={handleLoginRedirect}
                   className="text-blue-700 hover:underline dark:text-blue-500 ms-2"
                 >
