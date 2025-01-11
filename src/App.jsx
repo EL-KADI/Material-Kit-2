@@ -10,8 +10,20 @@ import Error from "./Components/Error/Error";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import Cookies from "js-cookie";
 
 function App() {
+  useEffect(() => {
+    const user = Cookies.get("user");
+
+    if (!user) {
+      const defaultUser = {
+        username: "Guest",
+      };
+      Cookies.set("user", JSON.stringify(defaultUser));
+    }
+  }, []);
+
   useEffect(() => {
     const updateTheme = () => {
       const currentHour = new Date().getHours();
@@ -56,7 +68,6 @@ function App() {
 
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>
