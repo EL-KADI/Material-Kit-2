@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const ProtectedRoute = ({ children }) => {
-  const location = useLocation();
   const user = Cookies.get("user");
 
-  const currentPath = location.hash.replace("#", "");
+  const currentPath = window.location.hash.replace("#", "");
 
   if (user && (currentPath === "/login" || currentPath === "/register")) {
     return <Navigate to="/" />;
