@@ -22,7 +22,6 @@ export default function Register() {
     }
 
     setErrorMessage("");
-    navigate("/login");
     Cookies.set("user", JSON.stringify({ email, password }));
     navigate("/login");
   };
