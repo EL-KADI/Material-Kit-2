@@ -1,27 +1,22 @@
 import PropTypes from "prop-types";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const user = Cookies.get("user");
 
-  if (
-    user &&
-    (location.pathname === "/login" || location.pathname === "/register")
-  ) {
-    return <Navigate to="/login" />;
+
+  if (user && (location.pathname === "/login" || location.pathname === "/register")) {
+    return <div className="d-none">{children}</div>;
   }
 
-  if (
-    !user &&
-    location.pathname !== "/login" &&
-    location.pathname !== "/register"
-  ) {
-    return <Navigate to="/register" />;
+  if (!user && location.pathname !== "/login" && location.pathname !== "/register") {
+    return <div className="d-none">{children}</div>;
   }
 
-  return children;
+
+  return <div>{children}</div>;
 };
 
 ProtectedRoute.propTypes = {
