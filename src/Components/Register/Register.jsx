@@ -26,10 +26,6 @@ export default function Register() {
     navigate("/login");
   };
 
-  const handleLoginRedirect = () => {
-    navigate("/login");
-  };
-
   return (
     <div className="container bg-[url('../../Imges/factory-DwwbhEY2.gif')] bg-center bg-no-repeat w-full bg-cover h-screen bg-gray-500 bg-blend-darken 2xl:h-screen">
       <div className="row">
@@ -103,7 +99,6 @@ export default function Register() {
                 Already have an account?
                 <Link
                   to="/login"
-                  onClick={handleLoginRedirect}
                   className="text-blue-700 hover:underline dark:text-blue-500 ms-2"
                 >
                   Login

@@ -6,26 +6,20 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const user = Cookies.get("user");
 
-  
-  if (location.pathname === "/register") {
-    if (!user) {
-      return children; 
-    }
+  if (
+    user &&
+    (location.pathname === "/login" || location.pathname === "/register")
+  ) {
     return <Navigate to="/" />;
   }
 
-
-  if (location.pathname === "/login") {
-    if (!user) {
-      return children; 
-    }
-    return <Navigate to="/" />; 
+  if (
+    !user &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/register"
+  ) {
+    return <Navigate to="/register" />;
   }
-
-  if (!user) {
-    return <Navigate to="/register" />; 
-  }
-
 
   return children;
 };
